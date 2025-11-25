@@ -40,6 +40,7 @@ class RequestProvider extends ChangeNotifier {
       _requests[i] = HelpRequest(
         id: _requests[i].id,
         name: _requests[i].name,
+        phone: _requests[i].phone,
         location: _requests[i].location,
         urgency: _requests[i].urgency,
         description: _requests[i].description,

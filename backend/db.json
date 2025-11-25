@@ -3,6 +3,7 @@
     {
       "id": "r1",
       "name": "Demo Patient",
+      "phone": "555-0100",
       "location": "Home",
       "urgency": "Medium",
       "description": "Need transport assistance",

@@ -15,6 +15,7 @@ class _RequestHelpPageState extends State<RequestHelpPage> {
   final _desc = TextEditingController();
   String _urgency = 'Low';
   String _name = '';
+  String _phone = '';
 
   @override
   void initState() {
@@ -22,12 +23,16 @@ class _RequestHelpPageState extends State<RequestHelpPage> {
     StorageService.getName().then((v) {
       if (v != null) setState(() => _name = v);
     });
+    StorageService.getPhone().then((v) {
+      if (v != null) setState(() => _phone = v);
+    });
   }
 
   void _submit() async {
     final provider = Provider.of<RequestProvider>(context, listen: false);
     await provider.add({
       'name': _name,
+      'phone': _phone,
       'location': _loc.text.trim(),
       'urgency': _urgency,
       'description': _desc.text.trim(),

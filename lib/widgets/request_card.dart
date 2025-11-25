@@ -37,6 +37,8 @@ class RequestCard extends StatelessWidget {
             SizedBox(height: 8),
             Text(req.description),
             SizedBox(height: 8),
+            if (req.phone.isNotEmpty) Text('Phone: ${req.phone}', style: TextStyle(fontWeight: FontWeight.w600)),
+            SizedBox(height: 8),
             Row(
               mainAxisAlignment: MainAxisAlignment.spaceBetween,
               children: [

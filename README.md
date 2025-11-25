@@ -2,8 +2,9 @@
 
 This repository contains a minimal Flutter MVP app (`thali_help`) and a tiny REST backend to store help requests.
 
-Overview
-- Flutter app (no auth). Patient enters name once (stored via `SharedPreferences`).
+- Overview
+- Flutter app (no auth). Patient enters name and phone once (stored via `SharedPreferences`).
+- Simple Node/Express-like REST backend (file-based `db.json`) for storing requests.
 - Simple Node/Express-like REST backend (file-based `db.json`) for storing requests.
 
 Notes
@@ -22,6 +23,9 @@ node server.js
 ```
 
 By default the server runs on `http://localhost:3000`. For Android emulator use `http://10.0.2.2:3000`.
+
+Phone numbers
+- The app saves an optional patient phone number along with the name. Requests include the phone number so providers can contact patients.
 
 Running Flutter app
 

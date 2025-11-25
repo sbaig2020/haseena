@@ -10,11 +10,14 @@ class NameInputPage extends StatefulWidget {
 
 class _NameInputPageState extends State<NameInputPage> {
   final _ctrl = TextEditingController();
+  final _phoneCtrl = TextEditingController();
 
   void _save() async {
     final name = _ctrl.text.trim();
+    final phone = _phoneCtrl.text.trim();
     if (name.isEmpty) return;
     await StorageService.saveName(name);
+    if (phone.isNotEmpty) await StorageService.savePhone(phone);
     Navigator.pushReplacementNamed(context, '/dashboard');
   }
 
@@ -31,6 +34,8 @@ class _NameInputPageState extends State<NameInputPage> {
             Text('Enter your name', style: Theme.of(context).textTheme.headlineSmall),
             SizedBox(height: 12),
             TextField(controller: _ctrl, decoration: InputDecoration(border: OutlineInputBorder(), hintText: 'Name')),
+            SizedBox(height: 12),
+            TextField(controller: _phoneCtrl, decoration: InputDecoration(border: OutlineInputBorder(), hintText: 'Phone (optional)'), keyboardType: TextInputType.phone),
             SizedBox(height: 16),
             ElevatedButton(onPressed: _save, child: Text('Continue'))
           ],

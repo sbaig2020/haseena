@@ -2,6 +2,7 @@ import 'package:shared_preferences/shared_preferences.dart';
 
 class StorageService {
   static const _keyName = 'patient_name';
+  static const _keyPhone = 'patient_phone';
   static const _keyTransfusion = 'transfusion_date';
 
   static Future<void> saveName(String name) async {
@@ -12,6 +13,16 @@ class StorageService {
   static Future<String?> getName() async {
     final p = await SharedPreferences.getInstance();
     return p.getString(_keyName);
+  }
+
+  static Future<void> savePhone(String phone) async {
+    final p = await SharedPreferences.getInstance();
+    await p.setString(_keyPhone, phone);
+  }
+
+  static Future<String?> getPhone() async {
+    final p = await SharedPreferences.getInstance();
+    return p.getString(_keyPhone);
   }
 
   static Future<void> saveTransfusion(String date) async {
