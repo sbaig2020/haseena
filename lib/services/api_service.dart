@@ -1,13 +1,20 @@
 import 'dart:convert';
 import 'package:http/http.dart' as http;
 import '../models/request.dart';
+import 'storage_service.dart';
 
 class ApiService {
-  // Adjust this base URL for emulator or device. For Android emulator use http://10.0.2.2:3000
-  static String baseUrl = 'http://localhost:3000';
+  // Default base for local testing. The app reads a saved API base URL from SharedPreferences when available.
+  static const _defaultBase = 'http://localhost:3000';
+
+  static Future<String> _base() async {
+    final stored = await StorageService.getApiBase();
+    return (stored == null || stored.isEmpty) ? _defaultBase : stored;
+  }
 
   static Future<List<HelpRequest>> fetchRequests({String? name}) async {
-    final uri = Uri.parse('$baseUrl/requests${name != null ? '?name=${Uri.encodeComponent(name)}' : ''}');
+    final base = await _base();
+    final uri = Uri.parse('$base/requests${name != null ? '?name=${Uri.encodeComponent(name)}' : ''}');
     final res = await http.get(uri);
     if (res.statusCode == 200) {
       final List<dynamic> arr = jsonDecode(res.body);
@@ -17,7 +24,8 @@ class ApiService {
   }
 
   static Future<HelpRequest> createRequest(Map<String, dynamic> body) async {
-    final uri = Uri.parse('$baseUrl/requests');
+    final base = await _base();
+    final uri = Uri.parse('$base/requests');
     final res = await http.post(uri, body: jsonEncode(body), headers: {'Content-Type': 'application/json'});
     if (res.statusCode == 201) {
       return HelpRequest.fromJson(jsonDecode(res.body));
@@ -26,7 +34,8 @@ class ApiService {
   }
 
   static Future<HelpRequest> updateRequest(String id, Map<String, dynamic> body) async {
-    final uri = Uri.parse('$baseUrl/requests/$id');
+    final base = await _base();
+    final uri = Uri.parse('$base/requests/$id');
     final res = await http.put(uri, body: jsonEncode(body), headers: {'Content-Type': 'application/json'});
     if (res.statusCode == 200) {
       return HelpRequest.fromJson(jsonDecode(res.body));
@@ -35,7 +44,8 @@ class ApiService {
   }
 
   static Future<void> deleteRequest(String id) async {
-    final uri = Uri.parse('$baseUrl/requests/$id');
+    final base = await _base();
+    final uri = Uri.parse('$base/requests/$id');
     final res = await http.delete(uri);
     if (res.statusCode != 200) throw Exception('Failed to delete');
   }

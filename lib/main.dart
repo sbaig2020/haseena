@@ -7,6 +7,7 @@ import 'screens/my_requests_page.dart';
 import 'screens/provider_dashboard_page.dart';
 import 'screens/admin_dashboard_page.dart';
 import 'providers/request_provider.dart';
+import 'screens/settings_page.dart';
 import 'services/storage_service.dart';
 
 void main() async {
@@ -32,6 +33,7 @@ class MyApp extends StatelessWidget {
           '/dashboard': (_) => DashboardPage(),
           '/request': (_) => RequestHelpPage(),
           '/my_requests': (_) => MyRequestsPage(),
+          '/settings': (_) => SettingsPage(),
           '/provider': (_) => ProviderDashboardPage(),
           '/admin': (_) => AdminDashboardPage(),
           '/request_success': (_) => Scaffold(appBar: AppBar(title: Text('Success')), body: Center(child: Text('Request submitted'))),

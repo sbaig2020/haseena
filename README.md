@@ -102,6 +102,26 @@ static String baseUrl = 'http://YOUR_PC_IP:3000';
 
 Replace `YOUR_PC_IP` with the IP address of your computer. On macOS you can find it in System Settings → Network. On Windows use `ipconfig` in a terminal.
 
+Expose your PC backend to the internet (ngrok) — quick guide
+
+If your friend wants to leave the backend running on their PC and allow someone elsewhere (e.g., a teacher) to connect from their phone, a simple and safe option is to use ngrok to create a temporary public URL that tunnels to the PC.
+
+1. Install ngrok from https://ngrok.com/ and sign up for a free account if requested.
+
+2. On the PC where `backend/server.js` is running, open a terminal and run:
+
+```bash
+ngrok http 3000
+```
+
+3. ngrok will show a forwarding URL like `https://abcd-1234.ngrok.io` — copy the HTTPS URL.
+
+4. In the mobile app go to `Settings` (top-right gear) and paste that ngrok URL into the API base URL field, then press Save.
+
+5. Now the app will talk to the backend running on the PC through the ngrok tunnel. The teacher can open the app and see live requests as long as the PC (and ngrok) remain running.
+
+Security note: ngrok tunnels are temporary. Do not expose sensitive services without authentication. When finished, stop ngrok to close the tunnel.
+
 Run the Android app from VS Code (emulator)
 1. Launch an Android emulator: In VS Code press Cmd/Ctrl+Shift+P and run `Flutter: Launch Emulator`, then pick a device (or create one via Android Studio AVD Manager). Wait for it to start.
 2. In VS Code open the project folder and run `flutter pub get` (you can run this from the terminal or use the command palette `Flutter: Get Packages`).

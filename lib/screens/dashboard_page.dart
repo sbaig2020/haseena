@@ -11,6 +11,7 @@ class DashboardPage extends StatefulWidget {
 class _DashboardPageState extends State<DashboardPage> {
   String name = '';
   String? transfusion;
+  String? phone;
 
   @override
   void initState() {
@@ -21,16 +22,22 @@ class _DashboardPageState extends State<DashboardPage> {
   void _load() async {
     final n = await StorageService.getName();
     final t = await StorageService.getTransfusion();
+    final p = await StorageService.getPhone();
     setState(() {
       name = n ?? '';
       transfusion = t;
+      phone = p;
     });
   }
 
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: AppBar(title: Text('Thali Help')),
+      appBar: AppBar(title: Text('Thali Help'), actions: [
+        IconButton(
+            onPressed: () => Navigator.pushNamed(context, '/settings'),
+            icon: Icon(Icons.settings)),
+      ]),
       body: Padding(
         padding: const EdgeInsets.all(16.0),
         child: Column(
@@ -38,6 +45,7 @@ class _DashboardPageState extends State<DashboardPage> {
           children: [
             Text('Hello, $name', style: Theme.of(context).textTheme.headlineSmall),
             SizedBox(height: 12),
+            if (phone != null && phone!.isNotEmpty) Text('Phone: $phone', style: TextStyle(color: Colors.grey[800])),
             Card(
               shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(12)),
               child: Padding(
